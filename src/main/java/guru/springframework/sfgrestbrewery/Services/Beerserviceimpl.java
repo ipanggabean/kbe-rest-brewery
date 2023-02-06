@@ -108,4 +108,18 @@ public class Beerserviceimpl implements BeerService {
     public void deleteBeerById(UUID beerId) {
         beerRepository.deleteById(beerId);
     }
+
+    @Override
+    public void popularBeerPrice() {
+
+        //This method is to search for most popular beer type and get the average price of that beer type
+        String popularBeerType;
+        int totalQuantity;
+        double averagePrice;
+
+        //todo impl
+
+        System.out.println("The most popular beer type is " + popularBeerType + " with a total quantity of " + totalQuantity + " and an average price of $" + averagePrice);
+
+    }
 }

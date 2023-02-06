@@ -15,4 +15,6 @@ public interface Customerservice {
     void updateCustomer(UUID customerId, CustomerDto customerDto);
 
     void deleteById(UUID customerId);
+
+    List<CustomerDto> getSeniorCustomer(int count);
 }

@@ -22,4 +22,6 @@ public interface Beerservice {
     BeerDto getByUpc(String upc);
 
     void deleteBeerById(UUID beerId);
+
+    void popularBeerPrice();
 }

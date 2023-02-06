@@ -37,4 +37,12 @@ public class Customerserviceimpl implements CustomerService {
     public void deleteById(UUID customerId) {
         log.debug("Deleting.... ");
     }
+
+    @Override
+    public List<CustomerDto> getSeniorCustomer(int N) {
+        //todo impl
+
+        //This function is to get the customer sorted by their age and only retrieve the first N
+        log.debug("Retrieving....");
+    }
 }
