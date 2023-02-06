@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class BeerServiceImpl implements BeerService {
+public class Beerserviceimpl implements BeerService {
     private final BeerRepository beerRepository;
     private final BeerMapper beerMapper;
 

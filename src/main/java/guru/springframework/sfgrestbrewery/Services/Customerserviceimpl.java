@@ -11,7 +11,7 @@ import java.util.UUID;
  */
 @Slf4j
 @Service
-public class CustomerServiceImpl implements CustomerService {
+public class Customerserviceimpl implements CustomerService {
     @Override
     public CustomerDto getCustomerById(UUID customerId) {
         return CustomerDto.builder()

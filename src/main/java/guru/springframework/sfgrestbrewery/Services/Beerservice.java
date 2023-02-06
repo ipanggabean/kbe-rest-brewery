@@ -10,7 +10,7 @@ import java.util.UUID;
 /**
  * Created by jt on 2019-04-20.
  */
-public interface BeerService {
+public interface Beerservice {
     BeerPagedList listBeers(String beerName, BeerStyleEnum beerStyle, PageRequest pageRequest, Boolean showInventoryOnHand);
 
     BeerDto getById(UUID beerId, Boolean showInventoryOnHand);

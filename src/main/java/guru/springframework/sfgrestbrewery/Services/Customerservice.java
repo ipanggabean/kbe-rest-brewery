@@ -7,7 +7,7 @@ import java.util.UUID;
 /**
  * Created by jt on 2019-04-21.
  */
-public interface CustomerService {
+public interface Customerservice {
     CustomerDto getCustomerById(UUID customerId);
 
     CustomerDto saveNewCustomer(CustomerDto customerDto);
