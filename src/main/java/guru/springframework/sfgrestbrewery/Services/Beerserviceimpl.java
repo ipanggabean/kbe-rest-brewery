@@ -25,8 +25,12 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class Beerserviceimpl implements BeerService {
-    private final BeerRepository beerRepository;
-    private final BeerMapper beerMapper;
+    
+    @Autowired
+    private BeerRepository beerRepository;
+    
+    @Autowired
+    private BeerMapper beerMapper;
 
     @Override
     public BeerPagedList listBeers(String beerName, BeerStyleEnum beerStyle, PageRequest pageRequest, Boolean showInventoryOnHand) {
@@ -38,17 +42,20 @@ public class Beerserviceimpl implements BeerService {
             //search both
             beerPage = beerRepository.findAllByBeerNameAndBeerStyle(beerName, beerStyle, pageRequest);
         } else {
-            if (!StringUtils.isEmpty(beerName) && StringUtils.isEmpty(beerStyle)) {
-                //search beer_service name
-                beerPage = beerRepository.findAllByBeerName(beerName, pageRequest);
-            } else {
-                if (StringUtils.isEmpty(beerName) && !StringUtils.isEmpty(beerStyle)) {
-                    //search beer_service style
-                    beerPage = beerRepository.findAllByBeerStyle(beerStyle, pageRequest);
-                } else {
-                    beerPage = beerRepository.findAll(pageRequest);
-                }
-            }
+
+            beerPage = this.getBeersIfNameOrStyleIsEmpty(beerPage);
+
+            // if (!StringUtils.isEmpty(beerName) && StringUtils.isEmpty(beerStyle)) {
+            //     //search beer_service name
+            //     beerPage = beerRepository.findAllByBeerName(beerName, pageRequest);
+            // } else {
+            //     if (StringUtils.isEmpty(beerName) && !StringUtils.isEmpty(beerStyle)) {
+            //         //search beer_service style
+            //         beerPage = beerRepository.findAllByBeerStyle(beerStyle, pageRequest);
+            //     } else {
+            //         beerPage = beerRepository.findAll(pageRequest);
+            //     }
+            // }
         }
 
         for (Beer beer : beerPage.getContent()) {
@@ -67,6 +74,34 @@ public class Beerserviceimpl implements BeerService {
 
         return beerPagedList;
     }
+
+    private Page<Beer>  getBeersIfNameOrStyleIsEmpty(Page<Beer> beer){
+        
+        // if (!StringUtils.isEmpty(beerName) && StringUtils.isEmpty(beerStyle)) {
+        //         //search beer_service name
+        //         beerPage = beerRepository.findAllByBeerName(beerName, pageRequest);
+        // } else {
+        //     if (StringUtils.isEmpty(beerName) && !StringUtils.isEmpty(beerStyle)) {
+        //         //search beer_service style
+        //         beerPage = beerRepository.findAllByBeerStyle(beerStyle, pageRequest);
+        //     } else {
+        //         beerPage = beerRepository.findAll(pageRequest);
+        //     }
+        // }
+
+        if(!StringUtils.isEmpty(beerName)){
+            if(StringUtils.isEmpty(beerStyle)){
+                beerPage = beerRepository.findAllByBeerName(beerName, pageRequest);
+            }
+        }else{
+            if(!StringUtils.isEmpty(beerStyle)){
+                beerPage = beerRepository.findAllByBeerStyle(beerStyle, pageRequest);
+            }else{
+                beerPage = beerRepository.findAll(pageRequest);
+            }
+        }
+    }
+
 
     @Cacheable(cacheNames = "beerCache", key = "#beerId", condition = "#showInventoryOnHand == false ")
     @Override
